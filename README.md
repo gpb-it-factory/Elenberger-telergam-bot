@@ -14,7 +14,8 @@
 
 <h2 id="1">Общая схема проекта</h2>
 
-```@startuml
+```plantuml
+@startuml
 !theme spacelab
 actor "Пользователь" as User
 participant "Frontend" as Front
@@ -38,8 +39,6 @@ Front -> User : Вывод ответного сообщения
 deactivate Front
 @enduml
 ```
-
-![Диаграмма](https://www.plantuml.com/plantuml/png/VLGzZzD04EtzAmRt9_ehq8c20ecIZcP9Z8Z8sP5ZKbzyEZuKXE4g2iGfIFGR7-QCYJT_OVOVyNO7dx1bdQBOdfsPD_FUZ7sop5IQlJwT1_Uobz5fHCk5caHpzJnGaon9AUGhDlp7Vk0Rt4lMDkVAsI6f9JrTHccm0C1iCbkeEAFmKPh4MHHFlTiRFV-JsNGwZ_ef3zNaLPVXdeCqJhA8abMKKl92G8w9lxkw-5_RCzQyv_qHxzZO_5dCbtR31zScjxRWokQ46DyrSOFJcYjuShk6PVYQ3V414JLSXdyv9zUs0D0N__G67ktJRc2TsNCF2KFxD6FNTWE4KLsAu3xr-nVA8B3b2jab8DU4EfeUgvL2qIlV2Wg3b1uh9JnPIwmlP_Wdrowob4vXQjUt_JWg1-yycHR6-WZd4047ZJr7z5VMuFZEyKIHkpcN509A0wW9XqJzx40JrH6S0-4WT5mQDwZo5XOywBaY_iIVUOlottZd1mfO96tWb2GOxhZrBJH-9ZN2VyYfa1_E5iy49Po_1LGLkFsaemUoGtHCNJNxNggWdG8meZ1QTai_MocGajMLF038484miY8YVD4JY_KjLBVpSWEO5mfG8ygFGmrqxu3bPN6N_q6toBaGaPmoeed3tiFiZdx_I-inksI3i5BqaS2UdlOYc4RzuXsdJk8xO8mC7jTMti41IM0F5RjLtuzHLajsVmmE80Q_NLVK5e0SpFC4tnbyw_u2)
 
 [Вверх :arrow_up:](#contents)
 
