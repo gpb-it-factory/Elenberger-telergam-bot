@@ -2,17 +2,18 @@
 
 <p align="center"> Создано в рамках обучения в академии Backend-разработки <a href="https://gpb.fut.ru/itfactory/backend"> GPB IT Factory</a></p>
 
-<h1 id="contents">Общая схема проекта</h1>
+<h1 id="contents">Оглавление</h1>
 
 1. [Общая схема проекта](#1)
 2. [Начало работы](#2)
-2. [Необходимые компоненты](#3)
-3. [Скачивание и установка](#4)
-4. [Используемые команды и примеры](#5)
-5. [Контакты](#6)
-6. [To Do](#7)
+3. [Необходимые компоненты](#3)
+4. [Скачивание и установка](#4)
+5. [Используемые команды и примеры](#5)
+6. [Контакты](#6)
+7. [To Do](#7)
 
 <h2 id="1">Общая схема проекта</h2>
+
 ```plantuml
 @startuml
 !theme spacelab
@@ -38,34 +39,39 @@ Front -> User : Вывод ответного сообщения
 deactivate Front
 @enduml
 ```
+
 [Вверх :arrow_up:](#contents)
+
 <h2 id="2">Начало работы</h2>
-:warning: Раздел в разработке
-\
-\
+
+:warning: Раздел в разработке  
 [Вверх :arrow_up:](#contents)
+
 <h2 id="3">Необходимые компоненты</h2>
-:warning: Новые компоненты будут добавляться по мере развития проекта\
+
+:warning: Новые компоненты будут добавляться по мере развития проекта
 - [Java 17+](https://www.java.com/ru/)
 - [Gradle 7.4/8.7](https://www.gradle.org/)
-- [SpringBoot](https://www.spring.io/projects/spring-boot)
-
+- [SpringBoot](https://www.spring.io/projects/spring-boot)  
 [Вверх :arrow_up:](#contents)
 
 <h2 id="4">Скачивание и установка</h2>
-:warning: Раздел в разработке
-\
+
+:warning: Раздел в разработке  
 [Вверх :arrow_up:](#contents)
 <h2 id="5">Используемые команды и примеры</h2>
-:warning: Будут добавляться по мере развития функционала
-\
+
+:warning: Будут добавляться по мере развития функционала  
 [Вверх :arrow_up:](#contents)
+
 <h2 id="6">Контакты</h2>
-E-mail: [elnberg2397@gmail.com](mailto:elnberg2397@gmail.com)\
-Telegram: [LohmatiyShmel](https://t.me/LohmatiyShmel)\
-\
+
+E-mail: [elnberg2397@gmail.com](mailto:elnberg2397@gmail.com)  
+Telegram: [LohmatiyShmel](https://t.me/LohmatiyShmel)  
 [Вверх :arrow_up:](#contents)
+
 <h2 id="7">To Do</h2>
+
 Учет текущих задач по проекту
 - [x] Задача 1. Создать репозиторий для telegram-бота
 - [x] Задача 2. Добавить ReadMe
