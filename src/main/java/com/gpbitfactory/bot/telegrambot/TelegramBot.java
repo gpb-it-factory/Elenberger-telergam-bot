@@ -1,6 +1,7 @@
 package com.gpbitfactory.bot.telegrambot;
 
-import com.gpbitfactory.bot.command.CommandCaptor;
+import com.gpbitfactory.bot.captor.CommandCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -15,12 +16,16 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String botName;
     @Value("${bot.Token}")
     private String botToken;
+    private final CommandCaptor commandCaptor;
+    @Autowired
+    public TelegramBot(CommandCaptor commandCaptor) {
+        this.commandCaptor = commandCaptor;
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
         Message anotherMessage = update.getMessage();
-        CommandCaptor captor = new CommandCaptor();
-        sendMessage(anotherMessage.getChatId(), captor.answer(anotherMessage));
+        sendMessage(anotherMessage.getChatId(), commandCaptor.answer(anotherMessage));
     }
 
     @Override
