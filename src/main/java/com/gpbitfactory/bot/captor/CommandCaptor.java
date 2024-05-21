@@ -9,16 +9,13 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Service
 public class CommandCaptor {
     private final CommandAnswerer answerer;
+
     @Autowired
     public CommandCaptor(CommandAnswerer answerer) {
         this.answerer = answerer;
     }
 
     public String answer(Message message) {
-        return messageCaption(message);
-    }
-
-    private String messageCaption(Message message) {
-            return answerer.needAnAnswer(message.getText());
+        return answerer.answering(message);
     }
 }
