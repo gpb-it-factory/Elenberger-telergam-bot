@@ -2,6 +2,7 @@ package com.gpbitfactory.bot.captorTest;
 
 import com.gpbitfactory.bot.captor.CommandCaptor;
 import com.gpbitfactory.bot.commands.CommandAnswerer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -13,16 +14,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class CommandCaptorTest {
     @Mock
-    Message message;
-    @Mock
-    CommandAnswerer commandAnswerer;
+    CommandAnswerer answerer;
     @Test
-    public void messageCaptionTest() {
-        when(message.getText()).thenReturn("");
-        when(commandAnswerer.answering(any(Message.class))).thenReturn("");
-        CommandCaptor commandCaptor = new CommandCaptor(commandAnswerer);
-        commandCaptor.answer(message);
-        verify(commandAnswerer, times(1)).answering(any(Message.class));
-        verify(message, times(1)).getText();
+    public void answerTest() {
+        CommandCaptor captor = new CommandCaptor(answerer);
+        when(answerer.answering(any(Message.class))).thenReturn("1");
+        Assertions.assertEquals(captor.answer(new Message()), "1");
     }
 }

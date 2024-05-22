@@ -20,20 +20,31 @@ public class CommandAnswererTest {
     Command command;
     @Mock
     Message messageCommand;
-    @Mock
-    Message messageNotCommand;
 
     @Test
-    public void answeringTest() {
+    public void answeringTestIsCommandInMap() {
         CommandAnswerer commandAnswerer = new CommandAnswerer(answers);
         when(answers.get(anyString())).thenReturn(command);
         when(command.execute()).thenReturn("1");
         when(messageCommand.isCommand()).thenReturn(true);
-        when(messageNotCommand.isCommand()).thenReturn(false);
         when(answers.containsKey(anyString())).thenReturn(true);
         when(messageCommand.getText()).thenReturn("1");
         Assertions.assertEquals(commandAnswerer.answering(messageCommand),"1");
-        Assertions.assertNotEquals(commandAnswerer.answering(messageNotCommand),"1");
     }
 
+    @Test
+    public void answeringTestNotCommand() {
+        CommandAnswerer commandAnswerer = new CommandAnswerer(answers);
+        when(messageCommand.isCommand()).thenReturn(false);
+        Assertions.assertEquals(commandAnswerer.answering(messageCommand),"Команда не опознана, проверьте список команд отправив /help");
+    }
+
+    @Test
+    public void answeringTestIsCommandNotInMap() {
+        CommandAnswerer commandAnswerer = new CommandAnswerer(answers);
+        when(messageCommand.isCommand()).thenReturn(true);
+        when(answers.containsKey(anyString())).thenReturn(false);
+        when(messageCommand.getText()).thenReturn("1");
+        Assertions.assertEquals(commandAnswerer.answering(messageCommand),"Команда не опознана, проверьте список команд отправив /help");
+    }
 }
