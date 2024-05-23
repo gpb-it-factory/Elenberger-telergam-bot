@@ -24,7 +24,7 @@ public class TelegramBotTest {
 
     @Test
      public void onUpdateReceivedTest() {
-        TelegramBot bot = new TelegramBot(commandCaptor);
+        TelegramBot bot = new TelegramBot("1","2",commandCaptor);
         when(commandCaptor.answer(message)).thenReturn("1");
         when(message.getChatId()).thenReturn(10L);
         bot.onUpdateReceived(update);

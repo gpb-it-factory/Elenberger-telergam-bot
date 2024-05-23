@@ -9,9 +9,10 @@ import java.util.Map;
 
 public class BotConfigTest {
 
+    BotConfig botConfig = new BotConfig();
+
     @Test
     public void answersTest() {
-        BotConfig botConfig = new BotConfig();
         Map<String, Command> answers = botConfig.answers();
         Assertions.assertTrue(answers.containsKey("/start"));
         Assertions.assertTrue(answers.containsKey("/ping"));

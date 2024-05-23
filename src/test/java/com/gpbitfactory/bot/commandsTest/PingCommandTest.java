@@ -10,7 +10,7 @@ public class PingCommandTest {
     @Test
     public void executeTest() {
         BotLogger botLogger = new BotLogger();
-        PingCommand command = new PingCommand(botLogger);
+        PingCommand command = new PingCommand("text", botLogger);
         Assertions.assertEquals(command.execute(), "pong");
     }
 }

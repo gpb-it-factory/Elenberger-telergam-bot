@@ -12,13 +12,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
-    @Value("${bot.Name}")
-    private String botName;
-    @Value("${bot.Token}")
-    private String botToken;
+
+    private final String botName;
+    private final String botToken;
     private final CommandCaptor commandCaptor;
+
     @Autowired
-    public TelegramBot(CommandCaptor commandCaptor) {
+    public TelegramBot(@Value("${bot.Name}") String botName,@Value("${bot.Token}") String botToken,CommandCaptor commandCaptor) {
+        this.botName = botName;
+        this.botToken = botToken;
         this.commandCaptor = commandCaptor;
     }
 

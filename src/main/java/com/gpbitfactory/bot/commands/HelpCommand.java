@@ -1,15 +1,21 @@
 package com.gpbitfactory.bot.commands;
 
 import com.gpbitfactory.bot.logger.BotLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HelpCommand implements Command {
+    private final String text;
     private final BotLogger botLogger;
-    @Autowired
-    public HelpCommand(BotLogger botLogger) {
+
+    public HelpCommand(@Value("/help") String text, BotLogger botLogger) {
+        this.text = text;
         this.botLogger = botLogger;
+    }
+
+    public String getText() {
+        return this.text;
     }
 
     @Override
