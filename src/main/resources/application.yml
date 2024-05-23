@@ -1,0 +1,6 @@
+bot:
+    Name: ${TELEGRAM_BOT_NAME}
+    Token: ${TELEGRAM_BOT_TOKEN}
+spring:
+    application:
+        name: botShmel
