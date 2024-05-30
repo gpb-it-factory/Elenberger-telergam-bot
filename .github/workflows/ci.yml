@@ -28,7 +28,7 @@
             add-job-summary-as-pr-comment: on-failure
 
         - name: Gradle Build
-          run: ./gradlew build -x test
+          run: ./gradlew build
 
         - name: Run tests
           run: |
