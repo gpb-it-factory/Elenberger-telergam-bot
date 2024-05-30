@@ -31,9 +31,9 @@
           run: chmod +x gradlew.bat
 
         - name: Gradle Build
-          run: gradlew.bat build -x test
+          run: ./gradlew.bat build -x test
 
         - name: Run tests
           run: |
-            gradlew.bat test
+            ./gradlew.bat test
             echo "${{ job.status }}"
