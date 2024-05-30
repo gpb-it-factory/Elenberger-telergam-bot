@@ -27,10 +27,13 @@
           with:
             add-job-summary-as-pr-comment: on-failure
 
+        - name: Set executable permissions for Gradle
+          run: chmod +x gradlew.bat
+
         - name: Gradle Build
-          run: ./gradlew build -x test
+          run: gradlew.bat build -x test
 
         - name: Run tests
           run: |
-            ./gradlew test
+            gradlew.bat test
             echo "${{ job.status }}"
