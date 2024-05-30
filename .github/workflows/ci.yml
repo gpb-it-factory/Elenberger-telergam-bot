@@ -27,9 +27,6 @@
           with:
             add-job-summary-as-pr-comment: on-failure
 
-        - name: Set executable permissions for Gradle
-          run: chmod +x $(which gradle)
-
         - name: Gradle Build
           run: ./gradlew build -x test
 
