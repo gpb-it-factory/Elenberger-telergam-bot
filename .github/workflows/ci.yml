@@ -22,13 +22,13 @@
             java-version: '17'
             distribution: 'oracle'
 
-        - name: Set executable permissions for Gradle
-          run: chmod +x $(which gradle)
-
         - name: Gradle Setup
           uses: gradle/actions/setup-gradle@v3
           with:
             add-job-summary-as-pr-comment: on-failure
+
+        - name: Set executable permissions for Gradle
+          run: chmod +x $(which gradle)
 
         - name: Gradle Build
           run: ./gradlew build -x test
