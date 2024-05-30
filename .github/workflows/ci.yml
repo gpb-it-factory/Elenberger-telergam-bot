@@ -28,9 +28,9 @@
             add-job-summary-as-pr-comment: on-failure
 
         - name: Gradle Build
-          run: ./gradlew build
+          run: chmod +x ./gradlew build -x test
 
         - name: Run tests
           run: |
-            ./gradlew test
+            chmod +x ./gradlew test
             echo "${{ job.status }}"
