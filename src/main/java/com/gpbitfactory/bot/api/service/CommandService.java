@@ -3,7 +3,6 @@ package com.gpbitfactory.bot.api.service;
 import com.gpbitfactory.bot.api.model.RegisterRequestDto;
 import com.gpbitfactory.bot.logger.BotLogger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
