@@ -17,7 +17,7 @@ public class CommandAnswerer {
 
     public String answering(Message message) {
         if (message.isCommand() && answers.containsKey(message.getText())) {
-            return answers.get(message.getText()).execute();
+            return answers.get(message.getText()).execute(message);
         }
         return "Команда не опознана, проверьте список команд отправив /help";
     }

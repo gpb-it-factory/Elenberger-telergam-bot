@@ -4,6 +4,7 @@ import com.gpbitfactory.bot.logger.BotLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class PingCommand implements Command {
@@ -18,7 +19,7 @@ public class PingCommand implements Command {
     }
 
     @Override
-    public String execute() {
+    public String execute(Message message) {
         botLogger.logMessage("Исполняю команду /ping");
         return "pong";
     }

@@ -4,3 +4,5 @@ bot:
 spring:
     application:
         name: botShmel
+middleService:
+    url: http://localhost:8088

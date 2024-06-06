@@ -1,16 +1,22 @@
 package com.gpbitfactory.bot.configuration;
 
+import com.gpbitfactory.bot.api.service.CommandService;
 import com.gpbitfactory.bot.captor.CommandCaptor;
 import com.gpbitfactory.bot.commands.*;
 import com.gpbitfactory.bot.logger.BotLogger;
 import com.gpbitfactory.bot.telegrambot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +29,7 @@ public class BotConfig {
     @Value("${bot.Token}")
     String botToken;
 
+
     @Bean
     public List<Command> commandList() {
         BotLogger botLogger = new BotLogger();
@@ -31,6 +38,7 @@ public class BotConfig {
         list.add(new StartCommand("/start", botLogger));
         list.add(new PingCommand("/ping", botLogger));
         list.add(new HelpCommand("/help", botLogger));
+        list.add(new RegisterCommand("/register", botLogger, commandService()));
         //Сюда добавлять новые команды
         return list;
     }
@@ -73,4 +81,27 @@ public class BotConfig {
         }
 
     }
+
+    @Bean
+    public RestTemplateBuilder restTemplateBuilder() {
+        return new RestTemplateBuilder();
+    }
+
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder,@Value("${middleService.url}") String backUri) {
+        return builder
+                .rootUri(backUri)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setConnectTimeout(Duration.ofSeconds(10))
+                .setReadTimeout(Duration.ofSeconds(10))
+                .build();
+    }
+
+    @Bean
+    public CommandService commandService() {
+        BotLogger botLogger = new BotLogger();
+        return new CommandService(restTemplate(restTemplateBuilder(), null), botLogger);
+    }
+
 }
