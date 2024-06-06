@@ -36,7 +36,7 @@ public class CommandAnswererTest {
         CommandAnswerer commandAnswerer = new CommandAnswerer(map);
         when(message.isCommand()).thenReturn(true);
         when(message.getText()).thenReturn("/help");
-        Assertions.assertEquals(helpCommand.execute(), commandAnswerer.answering(message));
+        Assertions.assertEquals(helpCommand.execute(message), commandAnswerer.answering(message));
     }
 
     @Test
