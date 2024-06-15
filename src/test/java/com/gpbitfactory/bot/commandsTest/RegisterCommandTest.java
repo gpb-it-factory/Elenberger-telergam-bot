@@ -1,9 +1,7 @@
 package com.gpbitfactory.bot.commandsTest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.gpbitfactory.bot.api.ApiConfig;
 import com.gpbitfactory.bot.commands.RegisterCommand;
@@ -61,8 +59,8 @@ public class RegisterCommandTest {
         when(user.getUserName()).thenReturn("ABOBA");
         stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
                 .withStatus(204)
-                ));
-        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:"+wireMockServer.port()));
+        ));
+        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:" + wireMockServer.port()));
         Assertions.assertEquals(registerCommand.execute(message), "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован");
     }
 
@@ -74,7 +72,7 @@ public class RegisterCommandTest {
         stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
                 .withStatus(404)
         ));
-        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:"+wireMockServer.port()));
+        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:" + wireMockServer.port()));
         Assertions.assertEquals(registerCommand.execute(message), "Непредвиденная ошибка");
     }
 }

@@ -1,6 +1,5 @@
 package com.gpbitfactory.bot.commandsTest;
 
-import com.gpbitfactory.bot.commands.HelpCommand;
 import com.gpbitfactory.bot.commands.PingCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
