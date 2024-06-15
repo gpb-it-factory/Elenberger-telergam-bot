@@ -57,6 +57,7 @@ jobs:
 
     - name: Start WireMock
       run:  |
+        curl -o wiremock-standalone.jar https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/2.27.2/wiremock-standalone-2.27.2.jar
         java -jar wiremock-standalone.jar --port 8888
 
     - name: Run tests
