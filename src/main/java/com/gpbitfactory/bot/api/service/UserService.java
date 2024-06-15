@@ -21,15 +21,16 @@ public class UserService implements ApiService {
 
     @Override
     public boolean post(Message message) {
-        log.info("Начал регистрацию пользователя @" + message.getFrom().getUserName());
+        log.info("Начал post-запрос для пользователя @" + message.getFrom().getUserName());
         ResponseEntity<?> response;
         try {
             response = restTemplate.postForEntity("/api/v1/users",
                     new UserInfoDto(message.getFrom().getId(), message.getFrom().getUserName()), String.class);
-            log.info("Ответ получен");
         } catch (HttpStatusCodeException e) {
+            log.info("Ответ не получен");
             return false;
         }
+        log.info("Ответ получен");
         return response.getStatusCode().is2xxSuccessful();
     }
 
