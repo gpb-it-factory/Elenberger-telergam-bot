@@ -56,7 +56,8 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Start WireMock
-      run:  java -jar wiremock-standalone.jar --port 8080
+      run:  |
+        java -jar wiremock-standalone.jar --port 8888
 
     - name: Run tests
       run: ./gradlew test
