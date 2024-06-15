@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TelegramBotTest {
 
