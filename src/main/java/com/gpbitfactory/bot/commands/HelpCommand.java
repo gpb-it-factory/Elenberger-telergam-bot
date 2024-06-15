@@ -1,19 +1,17 @@
 package com.gpbitfactory.bot.commands;
 
-import com.gpbitfactory.bot.logger.BotLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
+@Slf4j
 public class HelpCommand implements Command {
     private final String text;
-    private final BotLogger botLogger;
 
-    public HelpCommand(@Value("/help") String text, @Autowired BotLogger botLogger) {
+    public HelpCommand(@Value("/help") String text) {
         this.text = text;
-        this.botLogger = botLogger;
     }
 
     public String getText() {
@@ -22,7 +20,7 @@ public class HelpCommand implements Command {
 
     @Override
     public String execute(Message message) {
-        botLogger.logMessage("Исполняю команду /help");
+        log.info("Исполняю команду /help для пользователя: @" + message.getFrom().getUserName());
         return "Сейчас доступны только команды /help, но вы уже догадались её использовать и команда /ping";
     }
 }

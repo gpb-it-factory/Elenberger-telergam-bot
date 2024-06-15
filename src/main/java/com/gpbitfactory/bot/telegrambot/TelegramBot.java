@@ -18,7 +18,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final CommandCaptor commandCaptor;
 
     @Autowired
-    public TelegramBot(@Value("${bot.Name}") String botName,@Value("${bot.Token}") String botToken,CommandCaptor commandCaptor) {
+    public TelegramBot(@Value("${bot.Name}") String botName, @Value("${bot.Token}") String botToken, CommandCaptor commandCaptor) {
         this.botName = botName;
         this.botToken = botToken;
         this.commandCaptor = commandCaptor;
