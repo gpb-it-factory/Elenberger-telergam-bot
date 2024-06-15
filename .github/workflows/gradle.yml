@@ -33,5 +33,8 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build -x test
 
+    - name: Start WireMock
+      run: docker run -d -p 9999:8080 rodolpheche/wiremock
+
     - name: Run tests
       run: ./gradlew test

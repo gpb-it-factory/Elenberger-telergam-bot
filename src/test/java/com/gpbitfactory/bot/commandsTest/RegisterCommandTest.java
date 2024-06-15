@@ -2,12 +2,9 @@ package com.gpbitfactory.bot.commandsTest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.gpbitfactory.bot.api.ApiConfig;
 import com.gpbitfactory.bot.commands.RegisterCommand;
-import com.gpbitfactory.bot.configuration.BotConfig;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,14 +13,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -59,8 +55,10 @@ public class RegisterCommandTest {
         wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
                 .withStatus(204)
         ));
-        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:"+wireMockServer.port()));
-        Assertions.assertEquals( "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован", registerCommand.execute(message));
+        RegisterCommand registerCommand = new RegisterCommand("/register",
+                apiConfig.userService("http://localhost:" + wireMockServer.port()));
+        Assertions.assertEquals("Пользователь " + message.getFrom().getUserName() +
+                " успешно зарегистрирован", registerCommand.execute(message));
     }
 
     @Test
