@@ -13,7 +13,6 @@ public class RegisterCommand implements Command {
     private final String text;
     private final UserService userService;
 
-
     public RegisterCommand(@Value("/register") String text, @Autowired UserService userService) {
         this.text = text;
         this.userService = userService;
@@ -22,10 +21,12 @@ public class RegisterCommand implements Command {
     @Override
     public String execute(Message message) {
         log.info("Исполняю команду /register для пользователя: @" + message.getFrom().getUserName());
-        if (userService.post(message)) {
+        try {
+            userService.post(message);
             return "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован";
+        } catch (RuntimeException e) {
+            return "Непредвиденная ошибка";
         }
-        return "Непредвиденная ошибка";
     }
 
     @Override

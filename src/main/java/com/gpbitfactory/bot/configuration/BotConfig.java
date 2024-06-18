@@ -3,8 +3,8 @@ package com.gpbitfactory.bot.configuration;
 import com.gpbitfactory.bot.captor.CommandCaptor;
 import com.gpbitfactory.bot.commands.Command;
 import com.gpbitfactory.bot.commands.CommandAnswerer;
+import com.gpbitfactory.bot.commands.CommandList;
 import com.gpbitfactory.bot.telegrambot.TelegramBot;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Configuration
 public class BotConfig {
@@ -23,12 +24,17 @@ public class BotConfig {
     @Value("${bot.Token}")
     String botToken;
 
-    @Autowired
-    private List<Command> commandList;
+    @Bean
+    public CommandList commandList() {
+        return new CommandList();
+    }
 
     @Bean
     public Map<String, Command> commandMap() {
-        List<Command> list = commandList;
+        List<Command> list = commandList().getCommands();
+        if (list.isEmpty()) {
+            throw new NoSuchElementException();
+        }
         Map<String, Command> answers = new HashMap<>();
         for (Command command : list) {
             answers.put(command.getText(), command);
@@ -37,26 +43,11 @@ public class BotConfig {
     }
 
     @Bean
-    public CommandAnswerer commandAnswerer() {
-        return new CommandAnswerer(commandMap());
-    }
-
-    @Bean
-    public CommandCaptor commandCaptor() {
-        return new CommandCaptor(commandAnswerer());
-    }
-
-    @Bean
-    public TelegramBot telegramBot() {
-        return new TelegramBot(botName, botToken, commandCaptor());
-    }
-
-    @Bean
     public TelegramBotsApi telegramBotsApi() {
-        TelegramBotsApi botsApi;
-        TelegramBot telegramBot = telegramBot();
+        TelegramBot telegramBot = new TelegramBot(botName, botToken,
+                new CommandCaptor(new CommandAnswerer(commandMap())));
         try {
-            botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(telegramBot);
             return botsApi;
         } catch (TelegramApiException e) {

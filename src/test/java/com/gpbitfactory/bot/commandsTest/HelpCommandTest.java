@@ -24,6 +24,6 @@ public class HelpCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getUserName()).thenReturn("ABOBA");
         HelpCommand command = new HelpCommand("text");
-        Assertions.assertEquals(command.execute(message), "Сейчас доступны только команды /help, но вы уже догадались её использовать и команда /ping");
+        Assertions.assertEquals(command.execute(message), "Доступные команды:\n/help - список доступных команд\n/register - регистрация в мини-банке\n/ping - пасхалка");
     }
 }

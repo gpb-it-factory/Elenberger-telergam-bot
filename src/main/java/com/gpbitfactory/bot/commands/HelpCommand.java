@@ -21,6 +21,7 @@ public class HelpCommand implements Command {
     @Override
     public String execute(Message message) {
         log.info("Исполняю команду /help для пользователя: @" + message.getFrom().getUserName());
-        return "Сейчас доступны только команды /help, но вы уже догадались её использовать и команда /ping";
+        return "Доступные команды:\n/help - список доступных команд\n/register - регистрация в мини-банке\n/ping - пасхалка";
+
     }
 }
