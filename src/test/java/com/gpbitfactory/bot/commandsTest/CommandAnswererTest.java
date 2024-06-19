@@ -46,6 +46,7 @@ public class CommandAnswererTest {
     public void answeringTestNotCommand() {
         CommandAnswerer commandAnswerer = new CommandAnswerer(map);
         when(message.isCommand()).thenReturn(false);
+        when(message.getText()).thenReturn("/help");
         Assertions.assertEquals(commandAnswerer.answering(message), "Команда не опознана, проверьте список команд отправив /help");
     }
 

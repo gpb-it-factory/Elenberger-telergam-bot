@@ -69,7 +69,8 @@ public class RegisterCommandTest {
         wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
                 .withStatus(404)
         ));
-        RegisterCommand registerCommand = new RegisterCommand("/register", apiConfig.userService("http://localhost:" + wireMockServer.port()));
+        RegisterCommand registerCommand = new RegisterCommand("/register",
+                apiConfig.userService("http://localhost:" + wireMockServer.port()));
         Assertions.assertEquals("Непредвиденная ошибка", registerCommand.execute(message));
     }
 }
