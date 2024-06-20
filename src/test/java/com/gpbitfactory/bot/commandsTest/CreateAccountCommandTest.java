@@ -5,7 +5,6 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.gpbitfactory.bot.api.ApiConfig;
 import com.gpbitfactory.bot.commands.CreateAccountCommand;
-import com.gpbitfactory.bot.commands.RegisterCommand;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
