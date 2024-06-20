@@ -1,5 +1,6 @@
 package com.gpbitfactory.bot.api;
 
+import com.gpbitfactory.bot.api.service.AccountService;
 import com.gpbitfactory.bot.api.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -34,4 +35,10 @@ public class ApiConfig {
     public UserService userService( @Value("${middleService.url}") String url) {
         return new UserService(restTemplate(restTemplateBuilder(), url));
     }
+
+    @Bean
+    public AccountService accountService(@Value("${middleService.url}") String url) {
+        return new AccountService(restTemplate(restTemplateBuilder(), url));
+    }
+
 }
