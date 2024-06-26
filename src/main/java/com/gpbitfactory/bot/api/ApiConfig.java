@@ -3,12 +3,13 @@ package com.gpbitfactory.bot.api;
 import com.gpbitfactory.bot.api.service.AccountService;
 import com.gpbitfactory.bot.api.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClient;
 
 import java.time.Duration;
 
@@ -16,29 +17,30 @@ import java.time.Duration;
 public class ApiConfig {
 
     @Bean
-    public RestTemplateBuilder restTemplateBuilder() {
-        return new RestTemplateBuilder();
-    }
-
-
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder, @Value("${middleService.url}") String backUri) {
-        return builder
-                .rootUri(backUri)
+    public RestClient restClient(@Value("${middleService.url}") String backUrl) {
+        return RestClient.builder()
+                .baseUrl(backUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setConnectTimeout(Duration.ofSeconds(10))
-                .setReadTimeout(Duration.ofSeconds(10))
+                .requestFactory(clientHttpRequestFactory())
                 .build();
     }
 
     @Bean
-    public UserService userService( @Value("${middleService.url}") String url) {
-        return new UserService(restTemplate(restTemplateBuilder(), url));
+    public ClientHttpRequestFactory clientHttpRequestFactory() {
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        httpRequestFactory.setConnectTimeout(Duration.ofSeconds(9));
+        httpRequestFactory.setConnectionRequestTimeout(9);
+        return httpRequestFactory;
+    }
+
+    @Bean
+    public UserService userService(@Value("${middleService.url}") String url) {
+        return new UserService(restClient(url));
     }
 
     @Bean
     public AccountService accountService(@Value("${middleService.url}") String url) {
-        return new AccountService(restTemplate(restTemplateBuilder(), url));
+        return new AccountService(restClient(url));
     }
 
 }

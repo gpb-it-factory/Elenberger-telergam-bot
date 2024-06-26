@@ -4,17 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Service
 @Slf4j
 public class AccountService implements ApiService {
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
 
     @Autowired
-    public AccountService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public AccountService(RestClient restClient) {
+        this.restClient = restClient;
     }
 
     @Override
@@ -22,7 +22,10 @@ public class AccountService implements ApiService {
         long id = message.getFrom().getId();
         log.info("Начал post-запрос для пользователя @" + message.getFrom().getUserName());
         try {
-            restTemplate.postForEntity("/api/v1/users/{id}/accounts", id, String.class, id);
+            restClient.post()
+                    .uri("/api/v1/users/" + id + "/accounts")
+                    .body(id)
+                    .retrieve().toEntity(String.class);
             log.info("Ответ получен");
         } catch (HttpStatusCodeException e) {
             log.info("Ответ не получен");
