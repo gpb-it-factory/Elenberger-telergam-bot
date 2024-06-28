@@ -25,7 +25,7 @@ public class HelpCommand implements Command {
                 Доступные команды:
                 /help - список доступных команд
                 /register - регистрация в мини-банке
-                /createaccount - создать счет в мини-банке
+                /createaccount - создать счет в мини-банке "/createaccount [название счета не более 20-ти символов]
                 /ping - пасхалка""";
 
     }

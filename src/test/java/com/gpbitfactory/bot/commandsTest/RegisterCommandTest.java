@@ -57,8 +57,12 @@ public class RegisterCommandTest {
         ));
         RegisterCommand registerCommand = new RegisterCommand("/register",
                 apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        Assertions.assertEquals("Пользователь " + message.getFrom().getUserName() +
-                " успешно зарегистрирован", registerCommand.execute(message));
+        String expectedMessageText = "Пользователь " + message.getFrom().getUserName() +
+                " успешно зарегистрирован";
+
+        String messageText = registerCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 
     @Test
@@ -71,6 +75,10 @@ public class RegisterCommandTest {
         ));
         RegisterCommand registerCommand = new RegisterCommand("/register",
                 apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        Assertions.assertEquals("Непредвиденная ошибка", registerCommand.execute(message));
+        String expectedMessageText = "Непредвиденная ошибка";
+
+        String messageText = registerCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 }

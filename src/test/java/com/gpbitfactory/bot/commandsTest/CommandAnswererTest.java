@@ -39,6 +39,7 @@ public class CommandAnswererTest {
         when(user.getUserName()).thenReturn("ABOBA");
         when(message.isCommand()).thenReturn(true);
         when(message.getText()).thenReturn("/help");
+
         Assertions.assertEquals(helpCommand.execute(message), commandAnswerer.answering(message));
     }
 
@@ -47,7 +48,11 @@ public class CommandAnswererTest {
         CommandAnswerer commandAnswerer = new CommandAnswerer(map);
         when(message.isCommand()).thenReturn(false);
         when(message.getText()).thenReturn("/help");
-        Assertions.assertEquals(commandAnswerer.answering(message), "Команда не опознана, проверьте список команд отправив /help");
+        String expectedMessageText = "Команда не опознана, проверьте список команд отправив /help";
+
+        String messageText = commandAnswerer.answering(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 
     @Test
@@ -55,6 +60,10 @@ public class CommandAnswererTest {
         CommandAnswerer commandAnswerer = new CommandAnswerer(map);
         when(message.isCommand()).thenReturn(true);
         when(message.getText()).thenReturn("help");
-        Assertions.assertEquals(commandAnswerer.answering(message), "Команда не опознана, проверьте список команд отправив /help");
+        String expectedMessageText = "Команда не опознана, проверьте список команд отправив /help";
+
+        String messageText = commandAnswerer.answering(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 }

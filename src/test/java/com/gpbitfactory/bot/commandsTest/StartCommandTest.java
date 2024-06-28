@@ -24,6 +24,10 @@ public class StartCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getUserName()).thenReturn("ABOBA");
         StartCommand command = new StartCommand("text");
-        Assertions.assertEquals(command.execute(message), "Готов к работе!");
+        String expectedMessageText = "Готов к работе!";
+
+        String messageText = command.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 }

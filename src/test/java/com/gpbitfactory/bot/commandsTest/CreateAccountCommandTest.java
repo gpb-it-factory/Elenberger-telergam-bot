@@ -52,13 +52,67 @@ public class CreateAccountCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/777/accounts")).willReturn(aResponse()
-                .withStatus(204)
-        ));
+        when(message.getText()).thenReturn("/createaccount name");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/accounts"))
+                .willReturn(aResponse().withStatus(204)));
         CreateAccountCommand createAccountCommand = new CreateAccountCommand("/register",
                 apiConfig.accountService("http://localhost:" + wireMockServer.port()));
-        Assertions.assertEquals("Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован",
-                createAccountCommand.execute(message));
+        String expectedMessageText = "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован";
+
+        String messageText = createAccountCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+
+    @Test
+    public void executeHttpErrorTest() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        when(message.getText()).thenReturn("/createaccount name");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/accounts"))
+                .willReturn(aResponse().withStatus(404)));
+        CreateAccountCommand createAccountCommand = new CreateAccountCommand("/register",
+                apiConfig.accountService("http://localhost:" + wireMockServer.port()));
+        String expectedMessageText = "Ошибка соединения, попробуйте позже!";
+
+        String messageText = createAccountCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+
+    @Test
+    public void executeNoSuchElementTest() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        when(message.getText()).thenReturn("/createaccount");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/accounts"))
+                .willReturn(aResponse().withStatus(404)));
+        CreateAccountCommand createAccountCommand = new CreateAccountCommand("/register",
+                apiConfig.accountService("http://localhost:" + wireMockServer.port()));
+        String expectedMessageText = "Укажите название для вашего счета!";
+
+        String messageText = createAccountCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+
+    @Test
+    public void executeIllegalArgumentTest() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        when(message.getText()).thenReturn("/createaccount thereis20symbolsplus1");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/accounts"))
+                .willReturn(aResponse().withStatus(404)));
+        CreateAccountCommand createAccountCommand = new CreateAccountCommand("/register",
+                apiConfig.accountService("http://localhost:" + wireMockServer.port()));
+        String expectedMessageText = "Слишком длинное название счета. Лимит 20 символов";
+
+        String messageText = createAccountCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 
     @Test
@@ -66,11 +120,15 @@ public class CreateAccountCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/777/accounts")).willReturn(aResponse()
-                .withStatus(404)
-        ));
+        when(message.getText()).thenReturn(null);
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users/accounts"))
+                .willReturn(aResponse().withStatus(404)));
         CreateAccountCommand createAccountCommand = new CreateAccountCommand("/register",
                 apiConfig.accountService("http://localhost:" + wireMockServer.port()));
-        Assertions.assertEquals("Непредвиденная ошибка", createAccountCommand.execute(message));
+        String expectedMessageText = "Непредвиденная ошибка";
+
+        String messageText = createAccountCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 }
