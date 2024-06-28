@@ -20,9 +20,9 @@ import java.util.NoSuchElementException;
 @Configuration
 public class BotConfig {
     @Value("${bot.Name}")
-    String botName;
+    private String botName;
     @Value("${bot.Token}")
-    String botToken;
+    private String botToken;
 
     @Bean
     public CommandList commandList() {
