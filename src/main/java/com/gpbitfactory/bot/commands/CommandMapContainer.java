@@ -23,13 +23,15 @@ public class CommandMapContainer {
     @PostConstruct
     public void init() {
         System.out.println("Доступные команды:");
-        commandMap.forEach((text, command) -> {
-            System.out.println("Доступна команда " + text);
-        });
+        commandMap.forEach((text, command) ->
+                System.out.println("Доступна команда " + text)
+        );
     }
+
     public Map<String, Command> getCommandMap() {
         return commandMap;
     }
+
     public Command getCommand(String text) {
         return commandMap.get(text);
     }

@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.Map;
-
 @Service
 public class CommandAnswerer {
     private final CommandMapContainer commandMapContainer;
