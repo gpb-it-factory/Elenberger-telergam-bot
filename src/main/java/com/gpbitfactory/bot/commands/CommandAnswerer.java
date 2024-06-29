@@ -8,16 +8,16 @@ import java.util.Map;
 
 @Service
 public class CommandAnswerer {
-    private final Map<String, Command> answers;
+    private final CommandMapContainer commandMapContainer;
 
     @Autowired
-    public CommandAnswerer(Map<String, Command> answers) {
-        this.answers = answers;
+    public CommandAnswerer(CommandMapContainer commandMapContainer) {
+        this.commandMapContainer = commandMapContainer;
     }
 
     public String answering(Message message) {
-        if (message.isCommand() && answers.containsKey(message.getText())) {
-            return answers.get(message.getText()).execute(message);
+        if (message.isCommand() && commandMapContainer.getCommandMap().containsKey(message.getText())) {
+            return commandMapContainer.getCommand(message.getText()).execute(message);
         }
         return "Команда не опознана, проверьте список команд отправив /help";
     }
