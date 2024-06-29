@@ -66,12 +66,45 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void executeErrorTest() {
+    public void executeHttpErrorTest() {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
         wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
                 .withStatus(404)
+        ));
+        RegisterCommand registerCommand = new RegisterCommand("/register",
+                apiConfig.userService("http://localhost:" + wireMockServer.port()));
+        String expectedMessageText = "Непредвиденная ошибка сети";
+
+        String messageText = registerCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+
+    @Test
+    public void executeHttpError409Test() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
+                .withStatus(409)
+        ));
+        RegisterCommand registerCommand = new RegisterCommand("/register",
+                apiConfig.userService("http://localhost:" + wireMockServer.port()));
+        String expectedMessageText = "Вы уже зарегистрированы!";
+
+        String messageText = registerCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+    @Test
+    public void executeErrorTest() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
+                .withStatus(500).withBody((String) null)
         ));
         RegisterCommand registerCommand = new RegisterCommand("/register",
                 apiConfig.userService("http://localhost:" + wireMockServer.port()));

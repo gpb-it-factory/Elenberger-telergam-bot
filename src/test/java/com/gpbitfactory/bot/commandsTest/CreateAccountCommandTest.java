@@ -57,7 +57,7 @@ public class CreateAccountCommandTest {
                 .willReturn(aResponse().withStatus(204)));
         CreateAccountCommand createAccountCommand = new CreateAccountCommand("/createaccount",
                 apiConfig.accountService("http://localhost:" + wireMockServer.port()));
-        String expectedMessageText = "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован";
+        String expectedMessageText = "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрировал новый счет";
 
         String messageText = createAccountCommand.execute(message);
 
