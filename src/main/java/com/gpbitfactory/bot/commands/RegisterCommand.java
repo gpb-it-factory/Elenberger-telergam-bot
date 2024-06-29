@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
@@ -24,7 +25,11 @@ public class RegisterCommand implements Command {
         try {
             userService.post(message);
             return "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован";
-        } catch (RuntimeException e) {
+        } catch (HttpClientErrorException e){
+            if (e.getStatusCode().value() == 409) return "Вы уже зарегистрированы!";
+            return "Непредвиденная ошибка сети";
+        }
+        catch (RuntimeException f) {
             return "Непредвиденная ошибка";
         }
     }
