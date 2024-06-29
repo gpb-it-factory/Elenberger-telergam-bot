@@ -3,6 +3,7 @@ package com.gpbitfactory.bot.api.service;
 import com.gpbitfactory.bot.api.model.UserInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClient;
@@ -14,7 +15,7 @@ public class UserService implements ApiService {
     private final RestClient restClient;
 
     @Autowired
-    public UserService(RestClient restClient) {
+    public UserService(@Qualifier("middleServiceRestClient") RestClient restClient) {
         this.restClient = restClient;
     }
 

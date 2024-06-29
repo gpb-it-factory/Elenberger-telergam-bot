@@ -15,7 +15,7 @@ import java.time.Duration;
 @Configuration
 public class ApiConfig {
 
-    @Bean
+    @Bean(name = "middleServiceRestClient")
     public RestClient restClient(@Value("${middleService.url}") String backUrl) {
         return RestClient.builder()
                 .baseUrl(backUrl)
