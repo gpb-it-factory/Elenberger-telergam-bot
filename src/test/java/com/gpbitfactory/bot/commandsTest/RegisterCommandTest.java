@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 public class RegisterCommandTest {
     private static WireMockServer wireMockServer;
 
-    ApiConfig apiConfig = new ApiConfig();
+    private final ApiConfig apiConfig = new ApiConfig();
     @Mock
     Message message;
     @Mock
