@@ -36,14 +36,23 @@ public class CommandAnswererTest {
         when(user.getUserName()).thenReturn("ABOBA");
         when(message.isCommand()).thenReturn(true);
         when(message.getText()).thenReturn("/help");
-        Assertions.assertEquals(helpCommand.execute(message), commandAnswerer.answering(message));
+        String expected = helpCommand.execute(message);
+
+        String actual = commandAnswerer.answering(message);
+
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void answeringTestNotCommand() {
         CommandAnswerer commandAnswerer = new CommandAnswerer(commandMapContainer);
         when(message.isCommand()).thenReturn(false);
-        Assertions.assertEquals(commandAnswerer.answering(message), "Команда не опознана, проверьте список команд отправив /help");
+        when(message.getText()).thenReturn("/help");
+        String expected = "Команда не опознана, проверьте список команд отправив /help";
+
+        String actual = commandAnswerer.answering(message);
+
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -51,6 +60,10 @@ public class CommandAnswererTest {
         CommandAnswerer commandAnswerer = new CommandAnswerer(commandMapContainer);
         when(message.isCommand()).thenReturn(true);
         when(message.getText()).thenReturn("help");
-        Assertions.assertEquals(commandAnswerer.answering(message), "Команда не опознана, проверьте список команд отправив /help");
+        String expected = "Команда не опознана, проверьте список команд отправив /help";
+
+        String actual = commandAnswerer.answering(message);
+
+        Assertions.assertEquals(expected, actual);
     }
 }

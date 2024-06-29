@@ -14,8 +14,9 @@ public class CommandAnswerer {
     }
 
     public String answering(Message message) {
-        if (message.isCommand() && commandMapContainer.getCommandMap().containsKey(message.getText())) {
-            return commandMapContainer.getCommand(message.getText()).execute(message);
+        String[] messageText = message.getText().split(" ");
+        if (message.isCommand() && commandMapContainer.getCommandMap().containsKey(messageText[0])) {
+            return commandMapContainer.getCommand(messageText[0]).execute(message);
         }
         return "Команда не опознана, проверьте список команд отправив /help";
     }
