@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BotShmelApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BotShmelApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BotShmelApplication.class, args);
+    }
 
 }

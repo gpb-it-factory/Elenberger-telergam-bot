@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 import static org.mockito.Mockito.*;
 
@@ -21,10 +22,14 @@ public class TelegramBotTest {
     CommandCaptor commandCaptor;
     @Mock
     Message message;
+    @Mock
+    User user;
 
     @Test
      public void onUpdateReceivedTest() {
         TelegramBot bot = new TelegramBot("1","2",commandCaptor);
+        when(message.getFrom()).thenReturn(user);
+        when(user.getUserName()).thenReturn("ABOBA");
         when(commandCaptor.answer(message)).thenReturn("1");
         when(message.getChatId()).thenReturn(10L);
         bot.onUpdateReceived(update);
