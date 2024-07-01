@@ -1,5 +1,6 @@
-package com.gpbitfactory.bot.commands;
+package com.gpbitfactory.bot.captor;
 
+import com.gpbitfactory.bot.commands.CommandMapContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;

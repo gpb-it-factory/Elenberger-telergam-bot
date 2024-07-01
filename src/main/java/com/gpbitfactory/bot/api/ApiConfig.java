@@ -1,6 +1,7 @@
 package com.gpbitfactory.bot.api;
 
 import com.gpbitfactory.bot.api.service.AccountService;
+import com.gpbitfactory.bot.api.service.TransferService;
 import com.gpbitfactory.bot.api.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,11 @@ public class ApiConfig {
     @Bean
     public AccountService accountService(@Value("${middleService.url}") String url) {
         return new AccountService(restClient(url));
+    }
+
+    @Bean
+    public TransferService transferService(@Value("${middleService.url}") String url) {
+        return new TransferService(restClient(url));
     }
 
 }
