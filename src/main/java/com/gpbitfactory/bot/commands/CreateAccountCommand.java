@@ -33,6 +33,7 @@ public class CreateAccountCommand implements Command {
         } catch (IllegalArgumentException f) {
             return "Слишком длинное название счета. Лимит 20 символов";
         } catch (HttpStatusCodeException g) {
+            log.error("Ошибка HTTP Код: "+g.getStatusCode().value());
             return "Ошибка соединения, попробуйте позже!";
         } catch (RuntimeException h) {
             return "Непредвиденная ошибка";

@@ -4,7 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.gpbitfactory.bot.api.ApiConfig;
-import com.gpbitfactory.bot.commands.GetBalanceCommand;
+import com.gpbitfactory.bot.commands.BalanceCommand;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = {ApiConfig.class})
 @WireMockTest
 @ExtendWith(MockitoExtension.class)
-public class GetBalanceCommandTest {
+public class BalanceCommandTest {
     private static WireMockServer wireMockServer;
 
     ApiConfig apiConfig = new ApiConfig();
@@ -35,7 +35,7 @@ public class GetBalanceCommandTest {
     @Mock
     User user;
 
-    private final GetBalanceCommand getBalanceCommand = new GetBalanceCommand("/getbalance",
+    private final BalanceCommand balanceCommand = new BalanceCommand("/balance",
             apiConfig.accountService("http://localhost:" + wireMockServer.port()));
     String jsonResponse = """
             [
@@ -71,7 +71,7 @@ public class GetBalanceCommandTest {
 
         String expectedMessageText = "Баланс ваших счетов:\nДеньги на шашлык: 3228 руб.\n";
 
-        String messageText = getBalanceCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }
@@ -86,7 +86,7 @@ public class GetBalanceCommandTest {
                         .withStatus(404)));
         String expectedMessageText = "Счет не найден!";
 
-        String messageText = getBalanceCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }
@@ -101,7 +101,7 @@ public class GetBalanceCommandTest {
                         .withStatus(500)));
         String expectedMessageText = "Непредвиденная ошибка сети!";
 
-        String messageText = getBalanceCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }
@@ -117,7 +117,7 @@ public class GetBalanceCommandTest {
                         .withBody("азазазаз")));
         String expectedMessageText = "Непредвиденная ошибка!";
 
-        String messageText = getBalanceCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }

@@ -14,12 +14,12 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-public class GetBalanceCommand implements Command {
+public class BalanceCommand implements Command {
 
     private final String text;
     private final AccountService accountService;
 
-    public GetBalanceCommand(@Value("/getbalance") String text, AccountService accountService) {
+    public BalanceCommand(@Value("/balance") String text, AccountService accountService) {
         this.text = text;
         this.accountService = accountService;
     }
@@ -27,7 +27,7 @@ public class GetBalanceCommand implements Command {
 
     @Override
     public String execute(Message message) {
-        log.info("Исполняю команду /getbalance для пользователя: @" + message.getFrom().getUserName());
+        log.info("Исполняю команду /balance для пользователя: @" + message.getFrom().getUserName());
         try {
             ResponseEntity<List<AccountInfoDTO>> response = accountService.get(message.getFrom().getId());
             return buildMessageText(Objects.requireNonNull(response.getBody()));
