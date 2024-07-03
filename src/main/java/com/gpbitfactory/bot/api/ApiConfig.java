@@ -50,5 +50,4 @@ public class ApiConfig {
     public TransferService transferService(@Value("${middleService.url}") String url) {
         return new TransferService(restClient(url));
     }
-
 }

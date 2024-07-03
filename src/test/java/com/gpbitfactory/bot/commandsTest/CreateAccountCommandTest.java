@@ -34,7 +34,6 @@ public class CreateAccountCommandTest {
     Message message;
     @Mock
     User user;
-
     CreateAccountCommand createAccountCommand = new CreateAccountCommand("/createaccount",
             apiConfig.accountService("http://localhost:" + wireMockServer.port()));
 
