@@ -1,13 +1,18 @@
 package com.gpbitfactory.bot.api.service;
 
+
+import com.gpbitfactory.bot.api.model.AccountInfoDTO;
 import com.gpbitfactory.bot.api.model.AccountRegisterDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClient;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -62,5 +67,12 @@ public class AccountService implements ApiService {
             log.info("Ответ не получен");
             throw e;
         }
+    }
+
+    public ResponseEntity<List<AccountInfoDTO>> get(Long id) {
+        return restClient.get()
+                .uri("/api/v1/users/" + id + "/accounts")
+                .retrieve().toEntity(new ParameterizedTypeReference<>() {
+                });
     }
 }

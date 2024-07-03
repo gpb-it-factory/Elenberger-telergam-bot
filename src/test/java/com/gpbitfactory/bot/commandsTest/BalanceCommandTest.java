@@ -4,7 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.gpbitfactory.bot.api.ApiConfig;
-import com.gpbitfactory.bot.commands.RegisterCommand;
+import com.gpbitfactory.bot.commands.BalanceCommand;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,14 +26,25 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = {ApiConfig.class})
 @WireMockTest
 @ExtendWith(MockitoExtension.class)
-public class RegisterCommandTest {
+public class BalanceCommandTest {
     private static WireMockServer wireMockServer;
 
-    private final ApiConfig apiConfig = new ApiConfig();
+    ApiConfig apiConfig = new ApiConfig();
     @Mock
     Message message;
     @Mock
     User user;
+
+    private final BalanceCommand balanceCommand = new BalanceCommand("/balance",
+            apiConfig.accountService("http://localhost:" + wireMockServer.port()));
+    String jsonResponse = """
+            [
+              {
+                "accountId": "52d2ef91-0b62-4d43-bb56-e7ec542ba8f8",
+                "accountName": "Деньги на шашлык",
+                "amount": "3228"
+              }
+            ]""";
 
     @BeforeAll
     public static void setUp() {
@@ -52,65 +63,61 @@ public class RegisterCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
-                .withStatus(204)
-        ));
-        RegisterCommand registerCommand = new RegisterCommand("/register",
-                apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        String expectedMessageText = "Пользователь " + message.getFrom().getUserName() +
-                " успешно зарегистрирован";
+        wireMockServer.stubFor(get(urlEqualTo("/api/v1/users/777/accounts"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(jsonResponse)
+                        .withHeader("Content-Type", "application/json")));
 
-        String messageText = registerCommand.execute(message);
+        String expectedMessageText = "Баланс ваших счетов:\nДеньги на шашлык: 3228 руб.\n";
 
-        Assertions.assertEquals(expectedMessageText, messageText);
-    }
-
-    @Test
-    public void executeHttpErrorTest() {
-        when(message.getFrom()).thenReturn(user);
-        when(user.getId()).thenReturn(777L);
-        when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
-                .withStatus(404)
-        ));
-        RegisterCommand registerCommand = new RegisterCommand("/register",
-                apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        String expectedMessageText = "Непредвиденная ошибка сети";
-
-        String messageText = registerCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }
 
     @Test
-    public void executeHttpError409Test() {
+    public void executeHttpError4xxTest() {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
-                .withStatus(409)
-        ));
-        RegisterCommand registerCommand = new RegisterCommand("/register",
-                apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        String expectedMessageText = "Вы уже зарегистрированы!";
+        wireMockServer.stubFor(get(urlEqualTo("/api/v1/users/777/accounts"))
+                .willReturn(aResponse()
+                        .withStatus(404)));
+        String expectedMessageText = "Счет не найден!";
 
-        String messageText = registerCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }
+
+    @Test
+    public void executeAnyOtherHttpErrorTest() {
+        when(message.getFrom()).thenReturn(user);
+        when(user.getId()).thenReturn(777L);
+        when(user.getUserName()).thenReturn("ABOBA");
+        wireMockServer.stubFor(get(urlEqualTo("/api/v1/users/777/accounts"))
+                .willReturn(aResponse()
+                        .withStatus(500)));
+        String expectedMessageText = "Непредвиденная ошибка сети!";
+
+        String messageText = balanceCommand.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
+    }
+
     @Test
     public void executeErrorTest() {
         when(message.getFrom()).thenReturn(user);
         when(user.getId()).thenReturn(777L);
         when(user.getUserName()).thenReturn("ABOBA");
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/users")).willReturn(aResponse()
-                .withStatus(500).withBody((String) null)
-        ));
-        RegisterCommand registerCommand = new RegisterCommand("/register",
-                apiConfig.userService("http://localhost:" + wireMockServer.port()));
-        String expectedMessageText = "Непредвиденная ошибка";
+        wireMockServer.stubFor(get(urlEqualTo("/api/v1/users/777/accounts"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody("азазазаз")));
+        String expectedMessageText = "Непредвиденная ошибка!";
 
-        String messageText = registerCommand.execute(message);
+        String messageText = balanceCommand.execute(message);
 
         Assertions.assertEquals(expectedMessageText, messageText);
     }

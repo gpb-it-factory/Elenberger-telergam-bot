@@ -1,4 +1,4 @@
 package com.gpbitfactory.bot.api.model;
 
-public record UserInfoDto(long userID, String userName) {
+public record UserInfoDto(Long userId, String userName) {
 }

@@ -32,6 +32,7 @@ public class HelpCommandTest {
                 /help - список доступных команд
                 /register - регистрация в мини-банке
                 /createaccount - создать счет в мини-банке "/createaccount [название счета не более 20-ти символов]
+                /balance - запрос баланса ваших счетов
                 /ping - пасхалка""");
     }
 }

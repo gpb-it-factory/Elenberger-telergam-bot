@@ -27,12 +27,13 @@ public class CreateAccountCommand implements Command {
         log.info("Исполняю команду /createaccount для пользователя: @" + message.getFrom().getUserName());
         try {
             accountService.post(message);
-            return "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрирован";
+            return "Пользователь " + message.getFrom().getUserName() + " успешно зарегистрировал новый счет";
         } catch (NoSuchElementException e) {
             return "Укажите название для вашего счета!";
         } catch (IllegalArgumentException f) {
             return "Слишком длинное название счета. Лимит 20 символов";
         } catch (HttpStatusCodeException g) {
+            log.error("Ошибка HTTP Код: "+g.getStatusCode().value());
             return "Ошибка соединения, попробуйте позже!";
         } catch (RuntimeException h) {
             return "Непредвиденная ошибка";
