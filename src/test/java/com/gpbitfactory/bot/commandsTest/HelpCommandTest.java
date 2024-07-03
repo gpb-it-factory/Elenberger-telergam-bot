@@ -24,6 +24,14 @@ public class HelpCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getUserName()).thenReturn("ABOBA");
         HelpCommand command = new HelpCommand("text");
-        Assertions.assertEquals(command.execute(message), "Доступные команды:\n/help - список доступных команд\n/register - регистрация в мини-банке\n/ping - пасхалка");
+
+        String actualAnswer = command.execute(message);
+
+        Assertions.assertEquals(actualAnswer, """
+                Доступные команды:
+                /help - список доступных команд
+                /register - регистрация в мини-банке
+                /createaccount - создать счет в мини-банке "/createaccount [название счета не более 20-ти символов]
+                /ping - пасхалка""");
     }
 }

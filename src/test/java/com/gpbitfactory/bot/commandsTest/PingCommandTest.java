@@ -24,6 +24,10 @@ public class PingCommandTest {
         when(message.getFrom()).thenReturn(user);
         when(user.getUserName()).thenReturn("ABOBA");
         PingCommand command = new PingCommand("text");
-        Assertions.assertEquals(command.execute(message), "pong");
+        String expectedMessageText = "pong";
+
+        String messageText = command.execute(message);
+
+        Assertions.assertEquals(expectedMessageText, messageText);
     }
 }

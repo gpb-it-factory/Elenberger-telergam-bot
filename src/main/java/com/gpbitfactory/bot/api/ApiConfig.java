@@ -1,5 +1,6 @@
 package com.gpbitfactory.bot.api;
 
+import com.gpbitfactory.bot.api.service.AccountService;
 import com.gpbitfactory.bot.api.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import java.time.Duration;
 
 @Configuration
 public class ApiConfig {
+
 
     @Bean(name = "middleServiceRestClient")
     public RestClient restClient(@Value("${middleService.url}") String backUrl) {
@@ -36,4 +38,11 @@ public class ApiConfig {
     public UserService userService(@Value("${middleService.url}") String url) {
         return new UserService(restClient(url));
     }
+
+
+    @Bean
+    public AccountService accountService(@Value("${middleService.url}") String url) {
+        return new AccountService(restClient(url));
+    }
+
 }
