@@ -1,5 +1,6 @@
 package com.gpbitfactory.bot.api.service;
 
+
 import com.gpbitfactory.bot.api.model.AccountInfoDTO;
 import com.gpbitfactory.bot.api.model.AccountRegisterDto;
 import lombok.extern.slf4j.Slf4j;
