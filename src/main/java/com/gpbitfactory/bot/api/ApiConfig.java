@@ -46,6 +46,7 @@ public class ApiConfig {
         return new AccountService(restClient(url));
     }
 
+
     @Bean
     public TransferService transferService(@Value("${middleService.url}") String url) {
         return new TransferService(restClient(url));
