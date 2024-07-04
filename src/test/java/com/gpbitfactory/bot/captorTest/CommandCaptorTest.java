@@ -1,7 +1,7 @@
 package com.gpbitfactory.bot.captorTest;
 
 import com.gpbitfactory.bot.captor.CommandCaptor;
-import com.gpbitfactory.bot.commands.CommandAnswerer;
+import com.gpbitfactory.bot.captor.CommandAnswerer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

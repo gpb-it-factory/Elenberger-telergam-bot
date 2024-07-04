@@ -1,6 +1,6 @@
 package com.gpbitfactory.bot.commandsTest;
 
-import com.gpbitfactory.bot.commands.CommandAnswerer;
+import com.gpbitfactory.bot.captor.CommandAnswerer;
 import com.gpbitfactory.bot.commands.CommandMapContainer;
 import com.gpbitfactory.bot.commands.HelpCommand;
 import org.junit.jupiter.api.Assertions;
